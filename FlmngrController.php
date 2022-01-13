@@ -3,7 +3,7 @@
 namespace Drupal\n1ed\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\File\FileSystem;
+use Drupal\Core\File\FileSystemInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +16,11 @@ use Drupal\n1ed\Flmngr\FlmngrServer\FlmngrServer;
 class FlmngrController extends ControllerBase {
 
   /**
-   * Drupal\Core\File\FileSystem definition.
+   * Drupal\Core\File\FileSystemInterface definition.
    *
-   * @var \Drupal\Core\File\FileSystem
+   * @var \Drupal\Core\File\FileSystemInterface
    */
-  protected $fileSystem;
+  protected $FileSystemInterface;
 
   /**
    * Symfony\Component\HttpFoundation\RequestStack definition.
@@ -32,9 +32,9 @@ class FlmngrController extends ControllerBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(FileSystem $file_system,
+  public function __construct(FileSystemInterface $file_system,
                               RequestStack $request_stack) {
-    $this->fileSystem = $file_system;
+    $this->FileSystemInterface = $file_system;
     $this->requestStack = $request_stack;
   }
 
@@ -55,9 +55,9 @@ class FlmngrController extends ControllerBase {
     
     FlmngrServer::flmngrRequest(
       [
-        'dirFiles' => $this->fileSystem->realpath('public://flmngr'),
-        'dirTmp' => $this->fileSystem->realpath('public://flmngr-tmp'),
-        'dirCache' => $this->fileSystem->realpath('public://flmngr-cache'),
+        'dirFiles' => $this->FileSystemInterface->realpath('public://flmngr'),
+        'dirTmp' => $this->FileSystemInterface->realpath('public://flmngr-tmp'),
+        'dirCache' => $this->FileSystemInterface->realpath('public://flmngr-cache'),
       ],
       $this->requestStack
     );
